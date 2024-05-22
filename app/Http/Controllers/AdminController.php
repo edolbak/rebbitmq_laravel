@@ -64,11 +64,7 @@ class AdminController extends Controller
      */
     public function show(Request $request, string $id):string
     {
-//        $host = "mysql-7409a9b-evd-a2c9.h.aivencloud.com";
-        $host = "mysql";
-        $user = 'avnadmin';
-        $pass = 'AVNS_u96SuJJYeS0uy50g5GP';
-        $db = 'defaultdb';
+
 //        $port = 16358;
         $port = 3306;
 
