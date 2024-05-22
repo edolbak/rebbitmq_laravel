@@ -14,6 +14,13 @@ class ExampleTest extends TestCase
     {
         $response = $this->get('/');
 
+        $aaa = $this->createSmth(someArg: true);
+        
         $response->assertStatus(200);
+    }
+
+    public function createSmth($someArg=false)
+    {
+        return  $someArg?'Yes':'No';
     }
 }

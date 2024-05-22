@@ -2,7 +2,7 @@
 
 namespace App\Providers;
 
-use App\Jobs\RabbitTestJob;
+use App\Jobs\RabbitMQTestJob;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -20,8 +20,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-//        $this->app->bindMethod([RabbitTestJob::class, 'handle'], function ($job){
-//            return $job->handle();
-//        });
+        $this->app->bindMethod([RabbitMQTestJob::class, 'handle'], function ($job){
+            return $job->handle();
+        });
     }
 }

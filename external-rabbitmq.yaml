@@ -1,0 +1,22 @@
+kind: "Service"
+apiVersion: "v1"
+metadata:
+  name: "rabbitmq-k8s"
+spec:
+  ports:
+    - name: "rabbitmq"
+      protocol: "TCP"
+      port: 5672
+      targetPort: 5672
+      nodePort: 0
+---
+kind: "Endpoints"
+apiVersion: "v1"
+metadata:
+  name: "rabbitmq-k8s"
+subsets:
+  - addresses:
+      - ip: "35.206.170.160"
+    ports:
+      - port: 5672
+        name: "rabbitmq"

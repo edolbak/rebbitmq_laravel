@@ -5,38 +5,43 @@ services:
         context: .
         dockerfile: Dockerfile
       command: 'php artisan serve --host=0.0.0.0'
+#      command: 'php artisan serve'
       volumes:
         - .:/app
       ports:
         - '8001:8000'
 #      networks:
 #        - rabbitmq
-      depends_on:
-        - admin-db
-
-    admin_queue:
-      build:
-        context: .
-        dockerfile: Dockerfile
-      command: 'php artisan queue:work'
-#      networks:
-#          - rabbitmq
-      depends_on:
-        - admin-db
-
-    admin-db:
-      image: mysql:8.0.0
+#      depends_on:
+#        - admin-db
+      extra_hosts:
+        - 'host.docker.internal:host-gateway'
       environment:
-        MYSQL_DATABASE: admin
-        MYSQL_USER: root
-        MYSQL_PASSWORD: root
-        MYSQL_ROOT_PASSWORD: root
-      volumes:
-        - ./storage/dbdata:/var/lib/mysql
-      ports:
-        - "33064:3306"
-#      networks:
-#          - rabbitmq
+        PHP_IDE_CONFIG: "ServerName=Docker"
+
+#    admin_queue:
+#      build:
+#        context: .
+#        dockerfile: Dockerfile
+#      command: 'php artisan queue:work'
+##      networks:
+##          - rabbitmq
+#      depends_on:
+#        - admin-db
+
+#    admin-db:
+#      image: mysql:8.0.0
+#      environment:
+#        MYSQL_DATABASE: admin
+#        MYSQL_USER: root
+#        MYSQL_PASSWORD: root
+#        MYSQL_ROOT_PASSWORD: root
+#      volumes:
+#        - ./storage/dbdata:/var/lib/mysql
+#      ports:
+#        - "33064:3306"
+##      networks:
+##          - rabbitmq
 
 #networks:
 #    rabbitmq:
