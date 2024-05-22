@@ -22,7 +22,6 @@ subsets:
       - port: 16358
         name: "mysql"
 
-
 #kind: Service
 #apiVersion: v1
 #metadata:
