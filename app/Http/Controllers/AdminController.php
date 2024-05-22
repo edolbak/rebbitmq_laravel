@@ -102,6 +102,8 @@ class AdminController extends Controller
         die(var_dump($user->name));
 
 
+
+
         if($user instanceof User) {
 //
 //            FirstAdminJob::dispatch($user)->delay(10);
@@ -150,3 +152,4 @@ class AdminController extends Controller
         //
     }
 }
+
