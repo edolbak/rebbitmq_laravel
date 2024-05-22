@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Jobs\FirstAdminJob;
 use App\Models\User;
+use Illuminate\Database\MySqlConnection;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Config;
@@ -15,14 +16,31 @@ class AdminController extends Controller
      */
     public function index(Request $request): string
     {
-        return json_encode([
-            'controller'=>__CLASS__,
-            'method'=>$request->method(),
-            'host'=>$request->host(),
-            'data'=>[
-                'aaa'=>'AAA',
-                'bbb'=>'BBB']
+        $user = new User();
+
+        $rrr = 1;
+        $conn = $user->testConnection();
+        $pdo = $conn instanceof MySqlConnection?$conn->getPdo():null;
+        $oneUserSt = $pdo->prepare('SELECT * FROM `users`');
+        $oneUser = $oneUserSt->fetchAll();
+
+        dd($pdo->query('SELECT * FROM `users`')->fetchAll());
+
+        // TODO-vardump VAR_DUMP
+        die(var_dump(phpinfo()));
+
+
+        $json_r = json_encode([
+            'controller' => __CLASS__,
+            'method' => $request->method(),
+            'host' => $request->host(),
+            'data' => [
+                'aaa' => 'AAA',
+                'bbb' => 'BBB']
         ]);
+
+
+        return $json_r;
     }
 
     /**
@@ -46,10 +64,54 @@ class AdminController extends Controller
      */
     public function show(Request $request, string $id):string
     {
-        $user = User::find($id);
-        if($user instanceof User) {
+//        $host = "mysql-7409a9b-evd-a2c9.h.aivencloud.com";
+        $host = "mysql";
+        $user = 'avnadmin';
+        $pass = 'AVNS_u96SuJJYeS0uy50g5GP';
+        $db = 'defaultdb';
+//        $port = 16358;
+        $port = 3306;
 
-            FirstAdminJob::dispatch($user)->delay(10);
+
+//        $host = "localhost";
+//        $user = 'evd';
+//        $pass = 'qazwsxed';
+//        $db = 'k8s_DB';
+
+
+//        $conn = new \mysqli($host, $user, $pass, $db, $port);
+//        // TODO-vardump VAR_DUMP
+//        die(var_dump($conn));
+
+
+//        try {
+//            $dbh = new \PDO("mysql:host=$host:$port;dbname=$db", $user, $pass);
+//            $sth = $dbh->query('show tables')->fetchAll();
+//            // TODO-vardump VAR_DUMP
+//            die(var_dump($sth));
+//        }catch (\Exception $e){
+//            // TODO-vardump VAR_DUMP
+//            die(var_dump($e->getMessage()));
+//
+//        }
+
+
+
+        $user = User::find($id);
+//        $user = new User();
+
+//        $conn = $user->testConnection();
+//        // TODO-vardump VAR_DUMP
+//        die(var_dump($conn));
+
+
+        // TODO-vardump VAR_DUMP
+        die(var_dump($user->name));
+
+
+        if($user instanceof User) {
+//
+//            FirstAdminJob::dispatch($user)->delay(10);
 
 
             return json_encode([
@@ -58,8 +120,11 @@ class AdminController extends Controller
                 'method'=>$request->method(),
                 'host'=>$request->host(),
                 'data'=>[
-                    'UserName'=>$user->name,
-                    'UserEmail'=>$user->email,]
+//                    'UserName'=>$user->name,
+//                    'UserEmail'=>$user->email,
+                    'UserName'=>'UN',
+                    'UserEmail'=>'UE',
+                    ]
             ]);
         }else {
             return response('Wrong ID!!!', Response::HTTP_BAD_REQUEST);

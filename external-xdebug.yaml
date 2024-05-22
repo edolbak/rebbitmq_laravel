@@ -1,0 +1,22 @@
+kind: "Service"
+apiVersion: "v1"
+metadata:
+  name: "xdebug-k8s"
+spec:
+  ports:
+    - name: "rabbitmq"
+      protocol: "TCP"
+      port: 9003
+      targetPort: 9003
+      nodePort: 0
+---
+kind: "Endpoints"
+apiVersion: "v1"
+metadata:
+  name: "xdebug-k8s"
+subsets:
+  - addresses:
+      - ip: "192.168.49.1"
+    ports:
+      - port: 9003
+        name: "xdebug"

@@ -2,7 +2,7 @@
 
 namespace App\Console\Commands;
 
-use App\Jobs\RabbitTestJob;
+use App\Jobs\RabbitMQTestJob;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Log;
 
@@ -27,6 +27,12 @@ class GogogoCommand extends Command
      */
     public function handle()
     {
-        RabbitTestJob::dispatch();
+        $data = [
+            'a'=>1111,
+            'b'=>2222,
+            'c'=>3333,
+        ];
+
+        RabbitMQTestJob::dispatch($data);
     }
 }
